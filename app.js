@@ -3,6 +3,18 @@ const express = require("express");
 const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
+const mongoose = require("mongoose");
+require("dotenv").config();
+
+// Set up mongoose connection
+
+mongoose.set("strictQuery", false);
+const mongoDB = process.env.MONGO_URI;
+
+async function main() {
+  await mongoose.connect(mongoDB);
+}
+main().catch((err) => console.log(err));
 
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
