@@ -10,6 +10,7 @@ require("dotenv").config();
 const session = require("express-session");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
+const bcrypt = require("bcryptjs");
 
 // models
 const User = require("./models/User");
@@ -43,7 +44,9 @@ passport.use(
       if (!user) {
         return done(null, false, { message: "Incorrect username" });
       }
-      if (user.password !== password) {
+      const match = await bcrypt.compare(password, user.password);
+      console.log(match);
+      if (!match) {
         return done(null, false, { message: "Incorrect password" });
       }
       return done(null, user);
@@ -71,6 +74,11 @@ app.use(session({ secret: "cats", resave: false, saveUninitialized: true }));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.urlencoded({ extended: false }));
+// access current user
+app.use((req, res, next) => {
+  res.locals.currentUser = req.user;
+  next();
+});
 
 app.use(logger("dev"));
 app.use(express.json());

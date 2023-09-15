@@ -1,11 +1,15 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-  </body>
-</html>
+<h2>
+  <% if (currentUser) { %>
+  Current User:
+  <%= currentUser.fullName %>
+  <% } else {%>
+  <a href="/log-in">log in</a>
+  <%}%>
+</h2>
+
+<h1><%= title %></h1>
+<p>
+  Welcome to
+  <%= title %>
+</p>
+<a href=""></a>
