@@ -11,6 +11,8 @@ const session = require("express-session");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 
+// models
+const User = require("./models/User");
 // Set up mongoose connection
 
 mongoose.set("strictQuery", false);
@@ -32,6 +34,37 @@ app.set("view engine", "ejs");
 
 app.use(expressLayouts);
 app.set("layout", "./layout.ejs");
+
+// passport configuration
+passport.use(
+  new LocalStrategy(async (username, password, done) => {
+    try {
+      const user = await User.findOne({ username });
+      if (!user) {
+        return done(null, false, { message: "Incorrect username" });
+      }
+      if (user.password !== password) {
+        return done(null, false, { message: "Incorrect password" });
+      }
+      return done(null, user);
+    } catch (err) {
+      return done(err);
+    }
+  })
+);
+
+passport.serializeUser((user, done) => {
+  done(null, user.id);
+});
+
+passport.deserializeUser(async (id, done) => {
+  try {
+    const user = await User.findById(id);
+    done(null, user);
+  } catch (err) {
+    done(err);
+  }
+});
 
 // session and passport setup
 app.use(session({ secret: "cats", resave: false, saveUninitialized: true }));
