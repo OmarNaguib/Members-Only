@@ -60,6 +60,7 @@ router.get("/member", (req, res) => {
 router.post("/member", async (req, res) => {
   if (req.body.password === process.env.MEMBER_PASSWORD) {
     await User.findByIdAndUpdate(req.user.id, { status: "member" }, {});
+    res.redirect("/");
   }
   res.render("member", { title: "member" });
 });
@@ -71,6 +72,7 @@ router.get("/admin", (req, res) => {
 router.post("/admin", async (req, res) => {
   if (req.body.password === process.env.ADMIN_PASSWORD) {
     await User.findByIdAndUpdate(req.user.id, { status: "admin" }, {});
+    res.redirect("/");
   }
   res.render("admin", { title: "admin" });
 });
