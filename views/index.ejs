@@ -1,3 +1,7 @@
+<h1>
+  user status:
+  <%= currentUser?currentUser.status:"outsider"; %>
+</h1>
 <h2>
   <% if (currentUser) { %>
   Current User:
@@ -7,6 +11,8 @@
   <a href="/log-in">log in</a> <a href="/sign-up">Sign up</a>
   <%}%>
 </h2>
+
+<h3><a href="/member">want to become a member?</a></h3>
 
 <h1><%= title %></h1>
 <p>

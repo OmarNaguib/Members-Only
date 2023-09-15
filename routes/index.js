@@ -47,10 +47,21 @@ router.post(
 router.get("/log-out", (req, res, next) => {
   req.logout((err) => {
     if (err) {
-      return next(err);
+      next(err);
     }
     res.redirect("/");
   });
+});
+
+router.get("/member", (req, res) => {
+  res.render("member", { title: "member" });
+});
+
+router.post("/member", async (req, res) => {
+  if (req.body.password === process.env.MEMBER_PASSWORD) {
+    await User.findByIdAndUpdate(req.user.id, { status: "member" }, {});
+  }
+  res.render("member", { title: "member" });
 });
 
 module.exports = router;
