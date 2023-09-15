@@ -64,4 +64,15 @@ router.post("/member", async (req, res) => {
   res.render("member", { title: "member" });
 });
 
+router.get("/admin", (req, res) => {
+  res.render("admin", { title: "admin" });
+});
+
+router.post("/admin", async (req, res) => {
+  if (req.body.password === process.env.ADMIN_PASSWORD) {
+    await User.findByIdAndUpdate(req.user.id, { status: "admin" }, {});
+  }
+  res.render("admin", { title: "admin" });
+});
+
 module.exports = router;
