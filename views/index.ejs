@@ -11,9 +11,13 @@
   <a href="/log-in">log in</a> <a href="/sign-up">Sign up</a>
   <%}%>
 </h2>
-
+<% if (currentUser.status==="normal") { %>
 <h3><a href="/member">want to become a member?</a></h3>
-<h3><a href="/admin">want to become a admin?</a></h3>
+<% } %>
+
+<% if (currentUser.status!=="admin") { %>
+<h3><a href="/admin">want to become an admin?</a></h3>
+<% } %>
 
 <h1><%= title %></h1>
 <p>
