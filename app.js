@@ -6,6 +6,10 @@ const logger = require("morgan");
 const mongoose = require("mongoose");
 const expressLayouts = require("express-ejs-layouts");
 require("dotenv").config();
+// auth
+const session = require("express-session");
+const passport = require("passport");
+const LocalStrategy = require("passport-local").Strategy;
 
 // Set up mongoose connection
 
@@ -28,6 +32,12 @@ app.set("view engine", "ejs");
 
 app.use(expressLayouts);
 app.set("layout", "./layout.ejs");
+
+// session and passport setup
+app.use(session({ secret: "cats", resave: false, saveUninitialized: true }));
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(express.urlencoded({ extended: false }));
 
 app.use(logger("dev"));
 app.use(express.json());
