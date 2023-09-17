@@ -56,7 +56,7 @@ router.get("/log-out", (req, res, next) => {
 router.get("/member", (req, res) => {
   res.render("member", { title: "member" });
 });
-
+// become a member
 router.post("/member", async (req, res) => {
   if (req.body.password === process.env.MEMBER_PASSWORD) {
     await User.findByIdAndUpdate(req.user.id, { status: "member" }, {});
@@ -64,7 +64,7 @@ router.post("/member", async (req, res) => {
   }
   res.render("member", { title: "member" });
 });
-
+// become an admin
 router.get("/admin", (req, res) => {
   res.render("admin", { title: "admin" });
 });
@@ -75,6 +75,14 @@ router.post("/admin", async (req, res) => {
     res.redirect("/");
   }
   res.render("admin", { title: "admin" });
+});
+
+router.get("/create", (req, res) => {
+  res.render("createPost", { title: "Create a post" });
+});
+
+router.post("/create", (req, res) => {
+  res.render("createPost", { title: "Create a post" });
 });
 
 module.exports = router;

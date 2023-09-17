@@ -8,6 +8,7 @@
   <%= currentUser.fullName %>
   <a href="/log-out">log out</a>
   <% } else {%>
+  Want to create posts?
   <a href="/log-in">log in</a> <a href="/sign-up">Sign up</a>
   <%}%>
 </h2>
@@ -26,4 +27,7 @@
   Welcome to
   <%= title %>
 </p>
-<a href=""></a>
+
+<% if (currentUser) { %>
+<h3><a href="/create">Create a post</a></h3>
+<% } %>
