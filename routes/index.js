@@ -7,7 +7,9 @@ const User = require("../models/User");
 const Post = require("../models/Post");
 
 /* GET home page. */
-router.get("/", (req, res, next) => {
+router.get("/", async (req, res, next) => {
+  const posts = await Post.find().populate("author").exec();
+  console.log(posts);
   res.render("index", { title: "Express" });
 });
 router.get("/sign-up", (req, res) =>

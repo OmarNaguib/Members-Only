@@ -4,7 +4,7 @@ const { DateTime } = require("luxon");
 
 const postSchema = new Schema({
   postText: { type: String, required: true },
-  author: { type: Schema.Types.ObjectId, required: true },
+  author: { type: Schema.Types.ObjectId, required: true, ref: "User" },
   date: { type: Date, required: true },
 });
 
