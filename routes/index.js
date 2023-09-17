@@ -4,6 +4,7 @@ const passport = require("passport");
 
 const router = express.Router();
 const User = require("../models/User");
+const Post = require("../models/Post");
 
 /* GET home page. */
 router.get("/", (req, res, next) => {
@@ -81,8 +82,19 @@ router.get("/create", (req, res) => {
   res.render("createPost", { title: "Create a post" });
 });
 
-router.post("/create", (req, res) => {
-  res.render("createPost", { title: "Create a post" });
+router.post("/create", async (req, res, next) => {
+  try {
+    console.log(req.user);
+    const post = new Post({
+      postText: req.body.postText,
+      author: req.user._id,
+      date: new Date(),
+    });
+    await post.save();
+    res.redirect("/");
+  } catch (err) {
+    next(err);
+  }
 });
 
 module.exports = router;
