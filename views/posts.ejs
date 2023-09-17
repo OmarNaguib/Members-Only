@@ -1,11 +1,17 @@
 <% const redacted="[[ Redacted ]]" %>
 <h1>posts</h1>
 <% posts.forEach(post => { %>
-<h2>
+<h2 class="post">
   Posted by
   <%= !currentUser || currentUser.status === "normal"?redacted: post.author.fullName; %>
   on
   <%= !currentUser || currentUser.status === "normal"?redacted: post.formattedDate; %>
 </h2>
-<p class="post"><%= post.postText %></p>
+<p class="postText"><%= post.postText %></p>
+<% if (currentUser && currentUser.status === "admin") { %>
+<form action="/delete" method="post">
+  <input type="hidden" name="id" value="<%= post.id %>" />
+  <button>Delete</button>
+</form>
+<% } %>
 <% }) %>

@@ -9,7 +9,7 @@ const Post = require("../models/Post");
 /* GET home page. */
 router.get("/", async (req, res, next) => {
   const posts = await Post.find().populate("author").exec();
-  res.render("index", { title: "Express", posts });
+  res.render("index", { title: "Members Only", posts });
 });
 router.get("/sign-up", (req, res) =>
   res.render("signUp", { title: "Sign Up page" })
@@ -85,13 +85,21 @@ router.get("/create", (req, res) => {
 
 router.post("/create", async (req, res, next) => {
   try {
-    console.log(req.user);
     const post = new Post({
       postText: req.body.postText,
       author: req.user._id,
       date: new Date(),
     });
     await post.save();
+    res.redirect("/");
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.post("/delete", async (req, res, next) => {
+  try {
+    const result = await Post.findByIdAndDelete(req.body.id);
     res.redirect("/");
   } catch (err) {
     next(err);
