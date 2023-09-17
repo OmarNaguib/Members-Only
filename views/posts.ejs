@@ -9,12 +9,13 @@
     on
     <%= !currentUser || currentUser.status === "normal"?redacted: post.formattedDate; %>
   </h3>
+  <p class="postText"><%= post.postText %></p>
+  <% if (currentUser && currentUser.status === "admin") { %>
+  <form action="/delete" method="post">
+    <input type="hidden" name="id" value="<%= post.id %>" />
+    <button>Delete</button>
+  </form>
+  <% } %>
 </div>
-<p class="postText"><%= post.postText %></p>
-<% if (currentUser && currentUser.status === "admin") { %>
-<form action="/delete" method="post">
-  <input type="hidden" name="id" value="<%= post.id %>" />
-  <button>Delete</button>
-</form>
-<% } %>
+
 <% }) %>
