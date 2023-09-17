@@ -6,7 +6,15 @@
   </div>
   <div>
     <label for="password">Password</label>
-    <input name="password" type="password" />
+    <input name="password" type="password" placeholder="password" />
+  </div>
+  <div>
+    <label for="confirmPassword">Confirm Password</label>
+    <input
+      name="confirmPassword"
+      type="password"
+      placeholder="confirm password"
+    />
   </div>
   <div>
     <label for="firstName">First Name</label>
@@ -18,3 +26,7 @@
   </div>
   <button>Sign Up</button>
 </form>
+
+<% if (errors) { %>
+<h2 class="error"><%= errors[0].msg %></h2>
+<% } %>

@@ -1,6 +1,7 @@
 const express = require("express");
 const bcrypt = require("bcryptjs");
 const passport = require("passport");
+const { body, validationResult } = require("express-validator");
 
 const router = express.Router();
 const User = require("../models/User");
@@ -15,7 +16,18 @@ router.get("/sign-up", (req, res) =>
   res.render("signUp", { title: "Sign Up page" })
 );
 
-router.post("/sign-up", async (req, res, next) => {
+const passwordsMatch = body("confirmPassword")
+  .custom((value, { req }) => value === req.body.password)
+  .withMessage("Passwords do not match");
+
+router.post("/sign-up", passwordsMatch, async (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.render("signUp", {
+      title: "Sigiin Up page",
+      errors: errors.array(),
+    });
+  }
   try {
     bcrypt.hash(req.body.password, 10, async (err, hashedPassword) => {
       if (err) next(err);
@@ -28,9 +40,9 @@ router.post("/sign-up", async (req, res, next) => {
       });
       const result = await user.save();
     });
-    res.redirect("/");
+    return res.redirect("/");
   } catch (err) {
-    next(err);
+    return next(err);
   }
 });
 
