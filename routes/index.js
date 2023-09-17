@@ -86,6 +86,7 @@ router.get("/create", (req, res) => {
 router.post("/create", async (req, res, next) => {
   try {
     const post = new Post({
+      title: req.body.title,
       postText: req.body.postText,
       author: req.user._id,
       date: new Date(),
