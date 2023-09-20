@@ -36,7 +36,7 @@ router.post("/sign-up", passwordsMatch, async (req, res, next) => {
         password: hashedPassword,
         firstName: req.body.firstName,
         lastName: req.body.lastName,
-        status: "normal",
+        status: "user",
       });
       const result = await user.save();
     });
