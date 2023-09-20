@@ -5,9 +5,9 @@
   <h2><%= post.title %></h2>
   <h3>
     Posted by
-    <%= !currentUser || currentUser.status === "normal"?redacted: post.author.fullName; %>
+    <%= !currentUser || currentUser.status === "user"?redacted: post.author.fullName; %>
     on
-    <%= !currentUser || currentUser.status === "normal"?redacted: post.formattedDate; %>
+    <%= !currentUser || currentUser.status === "user"?redacted: post.formattedDate; %>
   </h3>
   <p class="postText"><%= post.postText %></p>
   <% if (currentUser && currentUser.status === "admin") { %>
