@@ -13,7 +13,7 @@ router.get("/", async (req, res, next) => {
   res.render("index", { title: "Members Only", posts });
 });
 router.get("/sign-up", (req, res) =>
-  res.render("signUp", { title: "Sign Up page" })
+  res.render("signUp", { title: "Sign Up page", errors: undefined })
 );
 
 const passwordsMatch = body("confirmPassword")
